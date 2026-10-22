@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 1: Removing Brackets (Distributive Law)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .math-font {
+            font-family: 'Fira Code', monospace, serif;
+        }
+
+        /* Arc drawing animation */
+        .distribute-arc {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawArc 0.75s ease-out forwards;
+        }
+
+        @keyframes drawArc {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Pulse highlight for sign changes */
+        .sign-alert {
+            animation: pulseGlow 1.2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            100% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+        }
+
+        /* Smooth transitions */
+        .step-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Navigation Series Header -->
+    <header class="bg-slate-900 text-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-500/20 p-2 rounded-xl border border-amber-500/30">
+                    <i data-lucide="parentheses" class="w-6 h-6 text-amber-400"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-amber-500/20 text-amber-300 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider border border-amber-500/30">Page 1 of 4</span>
+                        <h1 class="text-lg font-bold tracking-tight text-white">Algebra Techniques Series</h1>
+                    </div>
+                    <p class="text-xs text-slate-400">Module 1: Removing Brackets & Distributive Law</p>
+                </div>
+            </div>
+
+            <!-- Page Navigation Tabs -->
+            <nav class="flex flex-wrap gap-1.5 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700">
+                <a href="#" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-slate-950/20 text-slate-950 flex items-center justify-center text-[10px] font-extrabold">1</span>
+                    <span>Brackets</span>
+                </a>
+                <div class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 flex items-center gap-1 cursor-not-allowed">
+                    <span class="w-4 h-4 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-[10px]">2</span>
+                    <span>Like Terms</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 flex items-center gap-1 cursor-not-allowed">
+                    <span class="w-4 h-4 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-[10px]">3</span>
+                    <span>Denominators</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 flex items-center gap-1 cursor-not-allowed">
+                    <span class="w-4 h-4 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-[10px]">4</span>
+                    <span>Sandbox</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Banner / Concept Intro -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="space-y-1 max-w-3xl">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">Core Concept</span>
+                    <h2 class="text-xl font-bold text-slate-900">Distributive Law of Multiplication</h2>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    When removing brackets, the term outside <span class="math-font font-bold text-amber-600">a</span> must multiply <strong>every individual term</strong> inside <span class="math-font font-bold text-indigo-600">(b + c)</span>: 
+                    <span class="math-font font-extrabold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">a(b + c) = ab + ac</span>
+                </p>
+            </div>
+            
+            <button onclick="toggleGeometricArea()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs transition flex items-center gap-2 border border-slate-200">
+                <i data-lucide="layout-grid" class="w-4 h-4 text-amber-600"></i>
+                <span id="geo-btn-text">Show Geometric Area Proof</span>
+            </button>
+        </div>
+
+        <!-- Geometric Area Visualizer Card (Collapsible) -->
+        <div id="geometric-area-card" class="hidden bg-white rounded-2xl p-6 shadow-sm border border-amber-200/80 bg-amber-50/20 space-y-4 transition-all">
+            <div class="flex items-center gap-2 border-b border-amber-100 pb-3">
+                <i data-lucide="shapes" class="w-5 h-5 text-amber-600"></i>
+                <h3 class="font-bold text-slate-900 text-base">Geometric Visualization: Splitting Rectangle Area</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="text-sm text-slate-600 space-y-3">
+                    <p>
+                        Imagine a big rectangle of height <strong class="math-font text-amber-700">a</strong> and total width <strong class="math-font text-indigo-700">(x + y)</strong>.
+                    </p>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1.5">
+                        <div class="flex justify-between items-center text-xs">
+                            <span>Area of Whole Rectangle I:</span>
+                            <span class="math-font font-bold text-amber-700">a(x + y)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span>Area of Green Sub-Rectangle II:</span>
+                            <span class="math-font font-bold text-emerald-600">ax</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span>Area of Yellow Sub-Rectangle III:</span>
+                            <span class="math-font font-bold text-amber-600">ay</span>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 font-bold text-xs text-slate-900 flex justify-between">
+                            <span>Total Area Equality:</span>
+                            <span class="math-font text-amber-800">a(x + y) = ax + ay</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geometric SVG Diagram -->
+                <div class="flex justify-center items-center p-4 bg-slate-900 rounded-xl text-white shadow-inner">
+                    <svg width="320" height="130" viewBox="0 0 320 130" class="max-w-full">
+                        <!-- Whole Rectangle I -->
+                        <g transform="translate(10, 15)">
+                            <rect x="0" y="20" width="110" height="65" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
+                            <rect x="0" y="20" width="45" height="65" fill="#a7f3d0" stroke="#10b981" stroke-width="2" rx="4"/>
+                            <text x="55" y="12" text-anchor="middle" font-size="11" fill="#cbd5e1" class="math-font">x + y</text>
+                            <text x="-10" y="55" text-anchor="middle" font-size="11" fill="#cbd5e1" class="math-font">a</text>
+                            <text x="55" y="58" text-anchor="middle" font-size="12" font-weight="bold" fill="#78350f" class="math-font">Area I</text>
+                        </g>
+
+                        <text x="145" y="70" font-size="18" font-weight="bold" fill="#94a3b8">=</text>
+
+                        <!-- Rectangle II + Rectangle III -->
+                        <g transform="translate(170, 15)">
+                            <!-- II -->
+                            <rect x="0" y="20" width="45" height="65" fill="#a7f3d0" stroke="#10b981" stroke-width="2" rx="4"/>
+                            <text x="22.5" y="12" text-anchor="middle" font-size="11" fill="#cbd5e1" class="math-font">x</text>
+                            <text x="22.5" y="58" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46" class="math-font">ax</text>
+
+                            <text x="57" y="58" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+
+                            <!-- III -->
+                            <rect x="70" y="20" width="65" height="65" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
+                            <text x="102.5" y="12" text-anchor="middle" font-size="11" fill="#cbd5e1" class="math-font">y</text>
+                            <text x="102.5" y="58" text-anchor="middle" font-size="11" font-weight="bold" fill="#78350f" class="math-font">ay</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Distributive Law Workbench -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Panel: Example Selector -->
+            <div class="lg:col-span-4 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="list-video" class="w-5 h-5 text-amber-600"></i>
+                        <span>Select Example</span>
+                    </h3>
+                    <p class="text-xs text-slate-500">Choose an algebraic expression to visualize precision distributions:</p>
+
+                    <div class="space-y-2">
+                        <button onclick="selectExample(0)" id="ex-btn-0" class="ex-btn w-full text-left p-3.5 rounded-xl border border-amber-500 bg-amber-50 font-semibold math-font text-slate-800 transition flex justify-between items-center shadow-sm">
+                            <span class="text-base">5(x + 3)</span>
+                            <span class="text-[10px] font-sans font-extrabold uppercase text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Positive</span>
+                        </button>
+                        <button onclick="selectExample(1)" id="ex-btn-1" class="ex-btn w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 transition font-semibold math-font text-slate-800 flex justify-between items-center">
+                            <span class="text-base">-3(x + y)</span>
+                            <span class="text-[10px] font-sans font-extrabold uppercase text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Negative</span>
+                        </button>
+                        <button onclick="selectExample(2)" id="ex-btn-2" class="ex-btn w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 transition font-semibold math-font text-slate-800 flex justify-between items-center">
+                            <span class="text-base">-3(a - b)</span>
+                            <span class="text-[10px] font-sans font-extrabold uppercase text-red-700 bg-red-100 px-2 py-0.5 rounded">Double Neg</span>
+                        </button>
+                        <button onclick="selectExample(3)" id="ex-btn-3" class="ex-btn w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 transition font-semibold math-font text-slate-800 flex justify-between items-center">
+                            <span class="text-base">9(y + 1) - 4(y - 2) = 7</span>
+                            <span class="text-[10px] font-sans font-extrabold uppercase text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Multi-bracket</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="pt-4 border-t border-slate-100 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="playFullAnimation()" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="play" class="w-4 h-4 fill-slate-950"></i> Animate All
+                        </button>
+                        <button onclick="stepNext()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                            <span>Step Step</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <button onclick="resetSteps()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Visualizer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel: High Precision Canvas & Step Breakdown -->
+            <div class="lg:col-span-8 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between space-y-6">
+                <div>
+                    <!-- Canvas Header -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i> High-Precision Dynamic Distribution Board
+                        </h3>
+                        <span id="step-badge" class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">Step 0 of 2</span>
+                    </div>
+
+                    <!-- Dynamic SVG Overlay Container -->
+                    <div id="canvas-container" class="relative bg-slate-900 rounded-2xl p-8 min-h-[220px] flex flex-col items-center justify-center overflow-hidden shadow-inner">
+                        
+                        <!-- Overlay SVG for zero-offset arrows -->
+                        <svg id="svg-overlay" class="absolute inset-0 w-full h-full pointer-events-none z-10">
+                            <defs>
+                                <marker id="arrowhead-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b"/>
+                                </marker>
+                                <marker id="arrowhead-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+                                </marker>
+                            </defs>
+                        </svg>
+
+                        <!-- Math Expression Board with ID targets for exact bounding rect coords -->
+                        <div id="math-expression-wrapper" class="relative z-0 text-white font-extrabold math-font text-3xl md:text-4xl tracking-wider select-none my-4 flex items-center justify-center flex-wrap gap-x-1 gap-y-2">
+                            <!-- Injected dynamically with exact span ID targets -->
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Breakdown Display -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Expanded Steps & Rules</h4>
+                    
+                    <div id="step-breakdown-list" class="space-y-2.5">
+                        <!-- Step items rendered dynamically -->
+                    </div>
+                </div>
+
+                <!-- Explanatory Callout Box -->
+                <div id="rule-callout" class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm flex items-start gap-3">
+                    <i data-lucide="lightbulb" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5"></i>
+                    <div id="rule-callout-text">
+                        Click "Animate All" or "Step" to see curved distribution arrows emitted directly from outer multipliers to inner terms.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs space-y-1">
+            <p>© Interactive Algebra Series - Page 1: Removing Brackets</p>
+            <p class="text-slate-500">Precision SVG Vector Arc Engine using DOM Bounding Coordinates</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // High Precision Example Data Structure
+        const exampleData = [
+            {
+                id: 0,
+                title: "5(x + 3)",
+                mults: [ { id: "m0", text: "5" } ],
+                terms: [
+                    { id: "t0_1", text: "x", multId: "m0" },
+                    { id: "t0_2", text: "3", multId: "m0" }
+                ],
+                renderHtml: `
+                    <span id="m0" class="text-amber-400 px-1.5 py-0.5 bg-amber-400/10 rounded-md">5</span>
+                    <span class="text-slate-400">(</span>
+                    <span id="t0_1" class="text-emerald-300 px-1">x</span>
+                    <span class="text-slate-400">+</span>
+                    <span id="t0_2" class="text-emerald-300 px-1">3</span>
+                    <span class="text-slate-400">)</span>
+                `,
+                steps: [
+                    { title: "Identify Terms", html: "Outer multiplier is <span class='text-amber-500 font-bold'>5</span>. Terms inside are <span class='text-emerald-600 font-bold'>x</span> and <span class='text-emerald-600 font-bold'>3</span>.", arcIndices: [] },
+                    { title: "Distribute 5 to x", html: "<span class='math-font font-bold text-amber-700'>5 × x</span> = <span class='math-font font-bold text-indigo-700'>5x</span>", arcIndices: [0] },
+                    { title: "Distribute 5 to 3 & Simplify", html: "<span class='math-font font-bold text-amber-700'>5 × 3</span> = <span class='math-font font-bold text-indigo-700'>15</span> ➔ Final Result: <span class='math-font font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-200'>5x + 15</span>", arcIndices: [0, 1] }
+                ],
+                callout: "Positive multiplier 5 distributes straightforwardly to each term inside."
+            },
+            {
+                id: 1,
+                title: "-3(x + y)",
+                mults: [ { id: "m1", text: "-3" } ],
+                terms: [
+                    { id: "t1_1", text: "x", multId: "m1" },
+                    { id: "t1_2", text: "y", multId: "m1" }
+                ],
+                renderHtml: `
+                    <span id="m1" class="text-purple-400 px-1.5 py-0.5 bg-purple-400/10 rounded-md">-3</span>
+                    <span class="text-slate-400">(</span>
+                    <span id="t1_1" class="text-indigo-300 px-1">x</span>
+                    <span class="text-slate-400">+</span>
+                    <span id="t1_2" class="text-indigo-300 px-1">y</span>
+                    <span class="text-slate-400">)</span>
+                `,
+                steps: [
+                    { title: "Identify Terms", html: "Outer multiplier is <span class='text-purple-600 font-bold'>-3</span>. Terms inside are <span class='text-indigo-600 font-bold'>x</span> and <span class='text-indigo-600 font-bold'>+y</span>.", arcIndices: [] },
+                    { title: "Multiply -3 by x", html: "<span class='math-font font-bold text-purple-700'>(-3) × x</span> = <span class='math-font font-bold text-slate-800'>-3x</span>", arcIndices: [0] },
+                    { title: "Multiply -3 by +y", html: "<span class='math-font font-bold text-purple-700'>(-3) × (+y)</span> = <span class='math-font font-bold text-slate-800'>-3y</span> ➔ Final Result: <span class='math-font font-bold text-purple-700 bg-purple-50 px-2 py-1 rounded border border-purple-200'>-3x - 3y</span>", arcIndices: [0, 1] }
+                ],
+                callout: "A negative multiplier changes the sign of positive terms inside brackets to negative!"
+            },
+            {
+                id: 2,
+                title: "-3(a - b)",
+                mults: [ { id: "m2", text: "-3" } ],
+                terms: [
+                    { id: "t2_1", text: "a", multId: "m2" },
+                    { id: "t2_2", text: "b", multId: "m2", isDoubleNeg: true }
+                ],
+                renderHtml: `
+                    <span id="m2" class="text-red-400 px-1.5 py-0.5 bg-red-400/10 rounded-md">-3</span>
+                    <span class="text-slate-400">(</span>
+                    <span id="t2_1" class="text-amber-300 px-1">a</span>
+                    <span class="text-slate-400">-</span>
+                    <span id="t2_2" class="text-red-400 font-extrabold px-1 underline">b</span>
+                    <span class="text-slate-400">)</span>
+                `,
+                steps: [
+                    { title: "Identify Terms", html: "Multiplier is <span class='text-red-600 font-bold'>-3</span>. Terms inside are <span class='text-amber-600 font-bold'>a</span> and <span class='text-red-600 font-bold'>-b</span>.", arcIndices: [] },
+                    { title: "Multiply -3 by a", html: "<span class='math-font font-bold text-slate-800'>(-3) × a = -3a</span>", arcIndices: [0] },
+                    { title: "CRITICAL: Multiply -3 by -b", html: "<span class='math-font font-bold text-red-600 bg-red-50 px-2 py-1 rounded border border-red-200 shadow-sm sign-alert'>(-3) × (-b) = +3b</span> ➔ Final Result: <span class='math-font font-bold text-slate-900'>-3a + 3b</span>", arcIndices: [0, 1] }
+                ],
+                callout: "⚠️ <strong>CRITICAL SIGN RULE:</strong> Multiplying negative -3 by negative -b produces a POSITIVE +3b!"
+            },
+            {
+                id: 3,
+                title: "9(y + 1) - 4(y - 2) = 7",
+                mults: [
+                    { id: "m3_1", text: "9" },
+                    { id: "m3_2", text: "-4" }
+                ],
+                terms: [
+                    { id: "t3_1", text: "y", multId: "m3_1" },
+                    { id: "t3_2", text: "1", multId: "m3_1" },
+                    { id: "t3_3", text: "y", multId: "m3_2" },
+                    { id: "t3_4", text: "2", multId: "m3_2", isDoubleNeg: true }
+                ],
+                renderHtml: `
+                    <span id="m3_1" class="text-amber-400 px-1.5 py-0.5 bg-amber-400/10 rounded-md">9</span>
+                    <span class="text-slate-400">(</span>
+                    <span id="t3_1" class="text-emerald-300">y</span>
+                    <span class="text-slate-400">+</span>
+                    <span id="t3_2" class="text-emerald-300">1</span>
+                    <span class="text-slate-400">)</span>
+                    <span class="mx-1"></span>
+                    <span id="m3_2" class="text-red-400 px-1.5 py-0.5 bg-red-400/10 rounded-md">-4</span>
+                    <span class="text-slate-400">(</span>
+                    <span id="t3_3" class="text-emerald-300">y</span>
+                    <span class="text-slate-400">-</span>
+                    <span id="t3_4" class="text-red-400 font-extrabold underline">2</span>
+                    <span class="text-slate-400">)</span>
+                    <span class="text-slate-400 mx-1.5">=</span>
+                    <span class="text-white">7</span>
+                `,
+                steps: [
+                    { title: "Identify Both Brackets", html: "Expand <span class='text-amber-500 font-bold'>9(y + 1)</span> and <span class='text-red-500 font-bold'>-4(y - 2)</span> separately.", arcIndices: [] },
+                    { title: "Expand First Bracket", html: "<span class='math-font font-bold text-amber-700'>9(y + 1)</span> ➔ <span class='math-font font-bold text-slate-800'>9y + 9</span>", arcIndices: [0, 1] },
+                    { title: "Expand Second Bracket (-4 × -2 = +8)", html: "<span class='math-font font-bold text-red-600'>-4(y - 2)</span> ➔ <span class='math-font font-bold text-slate-800'>-4y + 8</span>", arcIndices: [0, 1, 2, 3] },
+                    { title: "Combine Like Terms & Solve", html: "<span class='math-font font-bold text-slate-800'>9y - 4y + 9 + 8 = 7</span> ➔ <span class='math-font font-bold text-slate-800'>5y + 17 = 7</span> ➔ <span class='math-font font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-200'>y = -2</span>", arcIndices: [0, 1, 2, 3] }
+                ],
+                callout: "Example 4.6(b): Pay special attention to -4 × -2 = +8 when expanding the second bracket."
+            }
+        ];
+
+        let currentExIndex = 0;
+        let currentStep = 0;
+        let isGeoOpen = false;
+
+        function selectExample(index) {
+            currentExIndex = index;
+            currentStep = 0;
+
+            // Highlight active button
+            document.querySelectorAll('.ex-btn').forEach((btn, i) => {
+                if (i === index) {
+                    btn.className = "ex-btn w-full text-left p-3.5 rounded-xl border border-amber-500 bg-amber-50 font-semibold math-font text-slate-800 transition flex justify-between items-center shadow-sm";
+                } else {
+                    btn.className = "ex-btn w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 transition font-semibold math-font text-slate-800 flex justify-between items-center";
+                }
+            });
+
+            renderBoard();
+        }
+
+        function renderBoard() {
+            const ex = exampleData[currentExIndex];
+            const mathWrapper = document.getElementById('math-expression-wrapper');
+            const ruleCalloutText = document.getElementById('rule-callout-text');
+            const stepBadge = document.getElementById('step-badge');
+
+            // Set math HTML
+            mathWrapper.innerHTML = ex.renderHtml;
+            ruleCalloutText.innerHTML = ex.callout;
+            stepBadge.innerText = `Step ${currentStep} of ${ex.steps.length - 1}`;
+
+            // Render steps list
+            renderStepBreakdownList();
+
+            // Draw precision SVG arcs after DOM paint
+            requestAnimationFrame(() => {
+                drawPrecisionArcs();
+            });
+        }
+
+        function renderStepBreakdownList() {
+            const ex = exampleData[currentExIndex];
+            const container = document.getElementById('step-breakdown-list');
+
+            let html = '';
+            for (let i = 0; i <= currentStep; i++) {
+                const step = ex.steps[i];
+                const isCurrent = (i === currentStep);
+
+                html += `
+                    <div class="step-card p-3.5 rounded-xl ${isCurrent ? 'bg-amber-50 border-2 border-amber-400 shadow-sm' : 'bg-slate-50 border border-slate-200 opacity-80'} flex items-start gap-3">
+                        <div class="w-6 h-6 rounded-full ${isCurrent ? 'bg-amber-500 text-slate-950 font-extrabold' : 'bg-slate-300 text-slate-700 font-bold'} flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                            ${i + 1}
+                        </div>
+                        <div class="space-y-1">
+                            <h5 class="text-xs font-bold text-slate-900">${step.title}</h5>
+                            <div class="text-xs sm:text-sm text-slate-700">${step.html}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // =========================================================================
+        // HIGH-PRECISION ZERO-OFFSET SVG ARC DRAWING USING getBoundingClientRect
+        // =========================================================================
+        function drawPrecisionArcs() {
+            const svg = document.getElementById('svg-overlay');
+            const container = document.getElementById('canvas-container');
+            const ex = exampleData[currentExIndex];
+            const activeStep = ex.steps[currentStep];
+
+            // Clear previous arcs (keep defs)
+            const defs = svg.querySelector('defs').outerHTML;
+            svg.innerHTML = defs;
+
+            if (!activeStep || !activeStep.arcIndices || activeStep.arcIndices.length === 0) {
+                return;
+            }
+
+            const containerRect = container.getBoundingClientRect();
+
+            activeStep.arcIndices.forEach(termIndex => {
+                const term = ex.terms[termIndex];
+                if (!term) return;
+
+                const multEl = document.getElementById(term.multId);
+                const termEl = document.getElementById(term.id);
+
+                if (!multEl || !termEl) return;
+
+                const multRect = multEl.getBoundingClientRect();
+                const termRect = termEl.getBoundingClientRect();
+
+                // Compute EXACT centers relative to SVG container
+                const startX = (multRect.left + multRect.width / 2) - containerRect.left;
+                const startY = multRect.top - containerRect.top; // top center of multiplier
+
+                const endX = (termRect.left + termRect.width / 2) - containerRect.left;
+                const endY = termRect.top - containerRect.top; // top center of target term
+
+                // Quadratic Bezier Control Point (curves upwards cleanly)
+                const distance = Math.abs(endX - startX);
+                const controlX = (startX + endX) / 2;
+                const controlY = Math.min(startY, endY) - Math.max(35, distance * 0.45);
+
+                const strokeColor = term.isDoubleNeg ? '#ef4444' : '#f59e0b';
+                const markerId = term.isDoubleNeg ? 'arrowhead-red' : 'arrowhead-amber';
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', `M ${startX},${startY} Q ${controlX},${controlY} ${endX},${endY}`);
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', strokeColor);
+                path.setAttribute('stroke-width', '3');
+                path.setAttribute('marker-end', `url(#${markerId})`);
+                path.setAttribute('class', 'distribute-arc');
+
+                svg.appendChild(path);
+            });
+        }
+
+        function stepNext() {
+            const ex = exampleData[currentExIndex];
+            if (currentStep < ex.steps.length - 1) {
+                currentStep++;
+                renderBoard();
+            }
+        }
+
+        function playFullAnimation() {
+            const ex = exampleData[currentExIndex];
+            currentStep = 0;
+            renderBoard();
+
+            let stepInterval = setInterval(() => {
+                if (currentStep < ex.steps.length - 1) {
+                    currentStep++;
+                    renderBoard();
+                } else {
+                    clearInterval(stepInterval);
+                }
+            }, 1000);
+        }
+
+        function resetSteps() {
+            currentStep = 0;
+            renderBoard();
+        }
+
+        function toggleGeometricArea() {
+            const card = document.getElementById('geometric-area-card');
+            const btnText = document.getElementById('geo-btn-text');
+            isGeoOpen = !isGeoOpen;
+
+            if (isGeoOpen) {
+                card.classList.remove('hidden');
+                btnText.innerText = "Hide Geometric Area Proof";
+            } else {
+                card.classList.add('hidden');
+                btnText.innerText = "Show Geometric Area Proof";
+            }
+        }
+
+        // Recalculate precision arcs on window resize
+        window.addEventListener('resize', () => {
+            drawPrecisionArcs();
+        });
+
+        // Initialize on load
+        window.onload = function() {
+            selectExample(0);
+        };
+    </script>
+</body>
+</html>```
